@@ -52,7 +52,7 @@
     if (self.cardType != nil) {
         UITextRange *r = self.textField.selectedTextRange;
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithAttributedString:[self.cardType formatNumber:_number kerning:self.theme.formattedEntryKerning]];
-        [text addAttributes:self.theme.textFieldTextAttributes range:NSMakeRange(0, text.length)];
+        [text addAttributes:[self.theme textFieldTextAttributes:self.textField] range:NSMakeRange(0, text.length)];
         self.textField.attributedText = text;
         self.textField.selectedTextRange = r;
     }
