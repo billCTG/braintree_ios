@@ -23,6 +23,7 @@
 @property (nonatomic, assign) BOOL displayAsValid;
 @property (nonatomic, assign) BOOL bottomBorder;
 @property (nonatomic, assign, readwrite) BOOL backspace;
+@property (nonatomic, assign) BOOL accessoryViewValid;
 
 /**
  The text displayed by the field

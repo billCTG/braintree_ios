@@ -76,8 +76,10 @@
 
 #pragma mark Attributes
 
-- (NSDictionary *)textFieldTextAttributes;
-- (NSDictionary *)textFieldPlaceholderAttributes;
+//- (NSDictionary *)textFieldTextAttributes;
+//- (NSDictionary *)textFieldPlaceholderAttributes;
+- (NSDictionary *)textFieldTextAttributes:(UITextField *) textField;
+- (NSDictionary *)textFieldPlaceholderAttributes:(UITextField *) textField;
 
 #pragma mark Visuals
 
