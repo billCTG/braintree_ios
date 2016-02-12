@@ -309,7 +309,7 @@
             return @[[NSString stringWithFormat:@"V:|%@-(35)-[cardFormSectionHeader]-(7)-[cardForm]%@|", summaryViewVisualFormat, ctaControlVisualFormat]];
         } else {
             summaryViewVisualFormat = [NSString stringWithFormat:@"%@-(35)-", summaryViewVisualFormat];
-            return @[[NSString stringWithFormat:@"V:|%@[paymentButton(==44)]-(18)-[cardFormSectionHeader]-(7)-[cardForm]%@|", summaryViewVisualFormat, ctaControlVisualFormat]];
+            return @[[NSString stringWithFormat:@"V:|%@[cardFormSectionHeader]-(7)-[cardForm]-(18)-[paymentButton(==44)]%@|", summaryViewVisualFormat, ctaControlVisualFormat]];
         }
 
     } else {

@@ -5,9 +5,9 @@
 
 @import QuartzCore;
 
-const CGFloat formFieldTopMargin = 7;
+const CGFloat formFieldTopMargin = 1;
 const CGFloat formFieldLabelHeight = 15;
-const CGFloat formFieldVerticalSpace = 1;
+const CGFloat formFieldVerticalSpace = 7;
 const CGFloat formFieldTextFieldHeight = 20;
 const CGFloat formFieldBottomMargin = 11;
 
@@ -20,18 +20,24 @@ const CGFloat formFieldBottomMargin = 11;
 @end
 
 @implementation BTUIFormField
+{
+    NSString *textFieldContent;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.displayAsValid = YES;
+        self.accessoryViewValid = YES;
         BTUITextField *textField = [BTUITextField new];
         textField.editDelegate = self;
         _textField = textField;
         self.textField.translatesAutoresizingMaskIntoConstraints = NO;
         self.textField.borderStyle = UITextBorderStyleNone;
         self.textField.backgroundColor = [UIColor clearColor];
+        self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.textField.opaque = NO;
+        [self.textField setFont:self.theme.textFieldFont];
         self.textField.adjustsFontSizeToFitWidth = YES;
         self.textField.returnKeyType = UIReturnKeyNext;
 
@@ -40,8 +46,6 @@ const CGFloat formFieldBottomMargin = 11;
         [self.floatLabel hideWithAnimation:NO];
 
         self.accessoryView = [[UIView alloc] init];
-        self.accessoryView.backgroundColor = [UIColor clearColor];
-        self.accessoryView.hidden = YES;
 
         [self.textField addTarget:self action:@selector(fieldContentDidChange) forControlEvents:UIControlEventEditingChanged];
         [self.textField addTarget:self action:@selector(editingDidBegin) forControlEvents:UIControlEventEditingDidBegin];
@@ -119,30 +123,30 @@ const CGFloat formFieldBottomMargin = 11;
 
 - (void)setTheme:(BTUI *)theme {
     [super setTheme:theme];
-    NSMutableDictionary *d = [NSMutableDictionary dictionaryWithDictionary:self.theme.textFieldTextAttributes];
+    NSMutableDictionary *d = [NSMutableDictionary dictionaryWithDictionary:[self.theme textFieldTextAttributes:self.textField]];
     d[NSKernAttributeName] = @0;
-    self.textField.defaultTextAttributes = self.theme.textFieldTextAttributes;
+    self.textField.defaultTextAttributes = [self.theme textFieldTextAttributes:self.textField];
     self.floatLabel.theme = theme;
 }
 
 - (void)setThemedPlaceholder:(NSString *)placeholder {
-    self.floatLabel.label.text = placeholder;
+    //    self.floatLabel.label.text = placeholder;
     self.textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholder ?: @""
-                                                                           attributes:self.theme.textFieldPlaceholderAttributes];
+                                                                           attributes:[self.theme textFieldPlaceholderAttributes:self.textField]];
 }
 
 - (void)setThemedAttributedPlaceholder:(NSAttributedString *)placeholder {
-    NSMutableAttributedString *mutableFloatLabel = [[NSMutableAttributedString alloc] initWithAttributedString:placeholder];
-    [mutableFloatLabel beginEditing];
-    [mutableFloatLabel removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
-    [mutableFloatLabel removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
-    [mutableFloatLabel removeAttribute:NSFontAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
-    [mutableFloatLabel endEditing];
-    self.floatLabel.label.attributedText = mutableFloatLabel;
+//    NSMutableAttributedString *mutableFloatLabel = [[NSMutableAttributedString alloc] initWithAttributedString:placeholder];
+//    [mutableFloatLabel beginEditing];
+//    [mutableFloatLabel removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
+//    [mutableFloatLabel removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
+//    [mutableFloatLabel removeAttribute:NSFontAttributeName range:NSMakeRange(0, [mutableFloatLabel length])];
+//    [mutableFloatLabel endEditing];
+//    self.floatLabel.label.attributedText = mutableFloatLabel;
 
     NSMutableAttributedString *mutablePlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:placeholder];
     [mutablePlaceholder beginEditing];
-    [mutablePlaceholder addAttributes:self.theme.textFieldPlaceholderAttributes range:NSMakeRange(0, [mutablePlaceholder length])];
+    [mutablePlaceholder addAttributes:[self.theme textFieldPlaceholderAttributes:self.textField] range:NSMakeRange(0, [mutablePlaceholder length])];
     [mutablePlaceholder endEditing];
 
     self.textField.attributedPlaceholder = mutablePlaceholder;
@@ -213,7 +217,7 @@ const CGFloat formFieldBottomMargin = 11;
 - (void)updateConstraints {
 
     NSDictionary *metrics = @{@"horizontalMargin": @([self.theme horizontalMargin]),
-                              @"accessoryViewWidth": @44,
+                              @"accessoryViewWidth": self.accessoryViewValid ? @44 : @0,
                               @"formFieldTopMargin": @(formFieldTopMargin),
                               @"formFieldLabelHeight": @(formFieldLabelHeight),
                               @"formFieldVerticalSpace": @(formFieldVerticalSpace),
@@ -268,7 +272,7 @@ const CGFloat formFieldBottomMargin = 11;
 
 - (void)updateFloatLabelTextColor {
     if ([self.textField isFirstResponder]) {
-        self.floatLabel.label.textColor = self.tintColor;
+        self.floatLabel.label.textColor = [UIColor colorWithRed:99.0/255.0 green:195.0/255.0 blue:194.0/255.0 alpha:1.0];
     } else {
         self.floatLabel.label.textColor = self.theme.textFieldFloatLabelTextColor;
     }
@@ -347,7 +351,6 @@ const CGFloat formFieldBottomMargin = 11;
         [self fieldContentDidChange];
         [self.textField.editDelegate textField:self.textField didInsertText:text];
         [self.textField.delegate textFieldDidEndEditing:self.textField];
-
     }
 }
 

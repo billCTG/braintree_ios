@@ -75,6 +75,8 @@
 - (void)fieldContentDidChange {
     self.displayAsValid = YES;
     _cvv = [BTUIUtil stripNonDigits:self.textField.text];
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:_cvv attributes:[self.theme textFieldTextAttributes:self.textField]];
+    self.textField.attributedText = result;
     [self.delegate formFieldDidChange:self];
 }
 

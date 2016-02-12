@@ -20,6 +20,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self updatePlaceholder];
+        self.accessoryViewValid = NO;
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
         self.textField.delegate = self;
     }
@@ -46,6 +47,7 @@
 #pragma mark - Handlers
 
 - (void)fieldContentDidChange {
+    [super fieldContentDidChange];
     _expirationMonth = nil;
     _expirationYear = nil;
 
@@ -67,8 +69,8 @@
     self.backspace = NO;
     // This is because UIControlEventEditingChanged is *not* sent after the "/" is removed.
     // We can't trigger UIControlEventEditingChanged here (after removing a "/") because that would cause an infinite loop.
-
-    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:formattedValue attributes:self.theme.textFieldTextAttributes];
+    
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:formattedValue attributes:[self.theme textFieldTextAttributes:self.textField]];
     [self kernExpiration:result];
     self.textField.attributedText = result;
 
@@ -123,7 +125,7 @@
 
 - (void)setThemedPlaceholder:(NSString *)placeholder {
     NSMutableAttributedString *attributedPlaceholder = [[NSMutableAttributedString alloc] initWithString:placeholder ?: @""
-                                                                                              attributes:self.theme.textFieldPlaceholderAttributes];
+                                                                                              attributes:[self.theme textFieldPlaceholderAttributes:self.textField]];
         [self kernExpiration:attributedPlaceholder];
         [self setThemedAttributedPlaceholder:attributedPlaceholder];
 }
