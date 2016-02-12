@@ -164,35 +164,53 @@
 }
 
 - (UIFont *)controlTitleFont {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:17.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
 }
 
 - (UIFont *)controlDetailFont {
-    return [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
 }
 
 - (UIFont *)textFieldFont {
-    return [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
 }
 
 - (UIFont *)textFieldFloatLabelFont {
-    return [UIFont fontWithName:@"HelveticaNeue" size:12.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
 }
 
 - (UIFont *)sectionHeaderFont {
-    return [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
 }
 
 #pragma mark - String Attributes
 
-- (NSDictionary *)textFieldTextAttributes {
+//- (NSDictionary *)textFieldTextAttributes {
+//    return @{NSFontAttributeName: self.textFieldFont,
+//             NSForegroundColorAttributeName: self.textFieldTextColor};
+//}
+
+//- (NSDictionary *)textFieldPlaceholderAttributes {
+//    return @{NSFontAttributeName: self.textFieldFont,
+//             NSForegroundColorAttributeName: self.textFieldPlaceholderColor};
+//}
+
+- (NSDictionary *)textFieldTextAttributes:(UITextField *) textField {
+    NSMutableParagraphStyle *style = [textField.defaultTextAttributes[NSParagraphStyleAttributeName] mutableCopy];
+    style.minimumLineHeight = textField.font.lineHeight - (textField.font.lineHeight - self.textFieldFont.lineHeight) / 2.0;
+    
     return @{NSFontAttributeName: self.textFieldFont,
-             NSForegroundColorAttributeName: self.textFieldTextColor};
+             NSForegroundColorAttributeName: self.textFieldTextColor,
+             NSParagraphStyleAttributeName : style};
 }
 
-- (NSDictionary *)textFieldPlaceholderAttributes {
+- (NSDictionary *)textFieldPlaceholderAttributes:(UITextField *) textField {
+    NSMutableParagraphStyle *style = [textField.defaultTextAttributes[NSParagraphStyleAttributeName] mutableCopy];
+    style.minimumLineHeight = textField.font.lineHeight - (textField.font.lineHeight - self.textFieldFont.lineHeight) / 2.0;
+    
     return @{NSFontAttributeName: self.textFieldFont,
-             NSForegroundColorAttributeName: self.textFieldPlaceholderColor};
+             NSForegroundColorAttributeName: self.textFieldPlaceholderColor,
+             NSParagraphStyleAttributeName : style};
 }
 
 #pragma mark Transitions

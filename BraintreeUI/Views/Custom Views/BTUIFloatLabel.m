@@ -39,7 +39,7 @@
     self.label.backgroundColor = [UIColor clearColor];
     self.label.opaque = NO;
     self.label.numberOfLines = 1;
-    self.label.adjustsFontSizeToFitWidth = YES;
+//    self.label.adjustsFontSizeToFitWidth = YES;
     [self addSubview:self.label];
 
     self.verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|"
