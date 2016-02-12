@@ -136,7 +136,7 @@ NSString *BTPaymentButtonPaymentButtonCellIdentifier = @"BTPaymentButtonPaymentB
                              @"bottomBorder": self.bottomBorder };
     NSDictionary *metrics = @{ @"borderWidth": @(self.theme.borderWidth) };
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[paymentButtonsCollectionView]|"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[paymentButtonsCollectionView]-20-|"
                                                                  options:0
                                                                  metrics:metrics
                                                                    views:views]];
@@ -144,24 +144,29 @@ NSString *BTPaymentButtonPaymentButtonCellIdentifier = @"BTPaymentButtonPaymentB
                                                                  options:0
                                                                  metrics:metrics
                                                                    views:views]];
+    
+    self.paymentButtonsCollectionView.layer.borderWidth = self.theme.borderWidth;
+    self.paymentButtonsCollectionView.layer.borderColor = self.theme.borderColor.CGColor;
+    self.paymentButtonsCollectionView.layer.cornerRadius = 4.0f;
+    self.paymentButtonsCollectionView.layer.masksToBounds = YES;
 
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topBorder]|"
-                                                                 options:0
-                                                                 metrics:metrics
-                                                                   views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topBorder(==borderWidth)]"
-                                                                 options:0
-                                                                 metrics:metrics
-                                                                   views:views]];
-
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomBorder]|"
-                                                                 options:0
-                                                                 metrics:metrics
-                                                                   views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomBorder(==borderWidth)]|"
-                                                                 options:0
-                                                                 metrics:metrics
-                                                                   views:views]];
+//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topBorder]|"
+//                                                                 options:0
+//                                                                 metrics:metrics
+//                                                                   views:views]];
+//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topBorder(==borderWidth)]"
+//                                                                 options:0
+//                                                                 metrics:metrics
+//                                                                   views:views]];
+//
+//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomBorder]|"
+//                                                                 options:0
+//                                                                 metrics:metrics
+//                                                                   views:views]];
+//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomBorder(==borderWidth)]|"
+//                                                                 options:0
+//                                                                 metrics:metrics
+//                                                                   views:views]];
 
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicatorView
                                                      attribute:NSLayoutAttributeCenterX
