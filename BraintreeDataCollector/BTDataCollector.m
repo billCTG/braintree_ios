@@ -7,7 +7,7 @@
 
 @implementation BTDataCollector
 
-static NSString *BTDataCollectorSharedMerchantId = @"600000";
+static NSString *BTDataCollectorSharedMerchantId = @"601510";
 
 NSString * const BTDataCollectorKountErrorDomain = @"com.braintreepayments.BTDataCollectorKountErrorDomain";
 
