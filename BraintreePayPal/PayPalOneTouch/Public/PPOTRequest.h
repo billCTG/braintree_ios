@@ -40,7 +40,7 @@ extern NSString * _Nonnull const PayPalEnvironmentMock;
 /*!
  @brief Optional preflight method, to determine in advance to which app we will switch when this request's `performWithCompletionBlock:` method is called.
 
- @return `PPOTRequestTargetBrowser`, `PPOTRequestTargetOnDeviceApplication`, or `PPPOTRequestTargetNone`
+ @ return `PPOTRequestTargetBrowser`, `PPOTRequestTargetOnDeviceApplication`, or `PPPOTRequestTargetNone`
 
  @note As currently implemented, `completionBlock` will be called synchronously.
  We use a completion block here to allow for future changes in implementation that might cause
